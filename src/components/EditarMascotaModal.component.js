@@ -14,7 +14,7 @@ const EditarMascotaModal = (props) => {
     * del formulario.
     */
     const [nombreMascota, setNombreMascota] = useState(props.mascota == null ? "" : props.mascota.nombre)  
-    const [tipoMascotaId, setTipoMascotaId] = useState(0) // <--Completar
+    const [tipoMascotaId, setTipoMascotaId] = useState("0") // <--Completar
     const [edadMascota, setEdadMascota] = useState(0) // <--Completar
     const [fechaNacimientoMascota, setFechaNacimientoMascota] = useState(getFechaActual()) // <--Completar
 
@@ -35,8 +35,15 @@ const EditarMascotaModal = (props) => {
         setFechaNacimientoMascota(evt.target.value)
     }
 
-    //TODO: Utilizar el props.tiposMascota para llenar el combo
-    // de tipos de mascota de forma dinamica
+    const onBotonGuardarClick = (evt) => {
+        const mascota = {
+            nombre : nombreMascota,
+            tipo : tipoMascotaId,
+            edad : edadMascota,
+            fechaNacimiento : fechaNacimientoMascota
+        }
+        props.guardarHandler(mascota)
+    }
 
 
     return <Modal show={props.show} onHide={props.closeHandler}>
@@ -55,8 +62,13 @@ const EditarMascotaModal = (props) => {
                     <select className="form-select" value={tipoMascotaId}
                         onChange={onTipoMascotaIdChange}>
                         <option value={0}>Elegir una opción</option>
-                        <option value={1}>Perro</option>
-                        <option value={2}>Gato</option>
+                        {
+                            props.tiposMascota.map((tipo) => {
+                                return <option key={tipo.id} value={tipo.id}>
+                                    {tipo.nombre}
+                                </option>
+                            })
+                        }
                     </select>
                 </div>
                 <div>
@@ -74,7 +86,10 @@ const EditarMascotaModal = (props) => {
         <Modal.Footer>
             <button type="button" className="btn btn-secondary"
                 onClick={props.closeHandler}>Cerrar</button>
-            <button type="button" className="btn btn-primary">Guardar</button>
+            <button type="button" className="btn btn-primary"
+                onClick={ onBotonGuardarClick }>
+                Guardar
+            </button>
         </Modal.Footer>
     </Modal>
 }

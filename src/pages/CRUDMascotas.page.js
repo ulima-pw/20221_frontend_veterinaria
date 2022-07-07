@@ -3,24 +3,28 @@ import { useEffect, useState } from "react";
 import EditarMascotaModal from "../components/EditarMascotaModal.component";
 
 const CRUDMascotasPage = () => {
-    const listaTiposMascota = [
-        { id : "1", nombre : "Perro"},
-        { id : "2", nombre : "Gato"},
-    ]
-
     const [showMascotaForm, setShowMascotaForm] = useState(false)
     const [selectedMascota, setSelectedMascota] = useState(null)
     const [listaMascotas, setListaMascotas] = useState([])
+    const [listaTipoMascotas, setListaTipoMascotas] = useState([])
 
     useEffect(() => {
         const dataFetch = async() => {
-            let url = "http://localhost:5000/mascotas"
+            const url = "http://localhost:5000/mascotas"
             const resp = await fetch(url)
             const data = await resp.json()
             setListaMascotas(data)
         }
 
+        const dataTipoMascotasFetch = async () => {
+            const url = "http://localhost:5000/tipomascotas"
+            const resp = await fetch(url)
+            const data = await resp.json()
+            setListaTipoMascotas(data)
+        }
+
         dataFetch()
+        dataTipoMascotasFetch()
     }, [])
  
     const onRegistrarMascota = () => {
@@ -33,6 +37,10 @@ const CRUDMascotasPage = () => {
 
     const onEditarMascota = (mascota) => {
         setShowMascotaForm(true)
+    }
+
+    const guardarNuevaMascota = (mascota) => {
+        console.log("Se guardara mascota ", mascota)
     }
 
     return <div className="container">
@@ -74,7 +82,8 @@ const CRUDMascotasPage = () => {
         <EditarMascotaModal show={showMascotaForm} 
             closeHandler={onCloseFormModal} 
             mascota={selectedMascota}
-            tiposMascota={listaTiposMascota}/>
+            tiposMascota={listaTipoMascotas}
+            guardarHandler={ guardarNuevaMascota }/>
     </div>
 }
 
