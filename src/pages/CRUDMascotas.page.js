@@ -10,14 +10,14 @@ const CRUDMascotasPage = () => {
 
     useEffect(() => {
         const dataFetch = async() => {
-            const url = `http://veterinariaul.herokuapp.com/mascotas`
+            const url = `https://veterinariaul.herokuapp.com/mascotas`
             const resp = await fetch(url)
             const data = await resp.json()
             setListaMascotas(data)
         }
 
         const dataTipoMascotasFetch = async () => {
-            const url = `${process.env.BACKEND_URL}/tipomascotas`
+            const url = `${process.env.REACT_APP_BACKENDURL}/tipomascotas`
             const resp = await fetch(url)
             const data = await resp.json()
             setListaTipoMascotas(data)
