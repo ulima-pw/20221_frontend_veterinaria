@@ -10,14 +10,14 @@ const CRUDMascotasPage = () => {
 
     useEffect(() => {
         const dataFetch = async() => {
-            const url = "http://localhost:5000/mascotas"
+            const url = `${process.env.BACKEND_URL}/mascotas`
             const resp = await fetch(url)
             const data = await resp.json()
             setListaMascotas(data)
         }
 
         const dataTipoMascotasFetch = async () => {
-            const url = "http://localhost:5000/tipomascotas"
+            const url = `${process.env.BACKEND_URL}/tipomascotas`
             const resp = await fetch(url)
             const data = await resp.json()
             setListaTipoMascotas(data)
