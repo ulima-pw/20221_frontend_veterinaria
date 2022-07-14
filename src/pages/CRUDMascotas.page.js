@@ -17,7 +17,7 @@ const CRUDMascotasPage = () => {
         }
 
         const dataTipoMascotasFetch = async () => {
-            const url = `http://veterinariaul.herokuapp.com/tipomascotas`
+            const url = `${process.env.BACKEND_URL}/tipomascotas`
             const resp = await fetch(url)
             const data = await resp.json()
             setListaTipoMascotas(data)
